@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ROOTS & CRAFTS</title>
+  <style>
+    :root {
+      --primary: #0077cc;
+      --secondary: #f9f9f9;
+      --accent: #ff6600;
+      --dark: #333;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: var(--secondary); color: var(--dark); }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 15px 20px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+    }
+    header h2 { font-size: 1.5rem; }
+    nav a { color: white; margin: 0 10px; text-decoration: none; font-weight: bold; transition: 0.3s; }
+    nav a:hover { color: var(--accent); }
+    nav button { margin-left:15px; padding:6px 12px; border:none; border-radius:5px; cursor:pointer; background:#ff3300; color:white; transition:0.3s; }
+    nav button:hover { background:#ff6600; }
+
+    .hero { background: url('https://www.sikkimexpress.com/uploads/news/750-380/23afd4420d8e9f012856e7214e82306e.jpg') no-repeat center/cover; height: 400px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; padding: 20px; }
+    .hero h1 { font-size: 2.8rem; margin-bottom: 15px; text-shadow: 0 2px 5px rgba(0,0,0,0.6); }
+    .hero p { font-size: 1.2rem; margin-bottom: 20px; }
+    .hero button { background: var(--accent); border: none; padding: 12px 20px; font-size: 1rem; color: white; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+    .hero button:hover { background: #e65c00; }
+
+    h3 { text-align: center; margin: 40px 0 20px; font-size: 1.8rem; color: var(--primary); position: relative; }
+    h3::after { content: ""; width: 60px; height: 4px; background: var(--accent); display: block; margin: 8px auto 0; border-radius: 2px; }
+
+    .categories { display: grid; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); gap: 20px; padding: 0 20px; }
+    .category-card { background: white; border-radius: 12px; overflow: hidden; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.3s; }
+    .category-card img { width: 100%; height: 150px; object-fit: cover; }
+    .category-card h4 { padding: 15px; }
+    .category-card:hover { transform: translateY(-5px); }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; padding: 0 20px; }
+    .card { border-radius: 12px; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; overflow: hidden; transition: transform 0.3s; }
+    .card:hover { transform: scale(1.03); }
+    .card img { width: 100%; height: 180px; object-fit: cover; }
+    .card h4 { margin: 10px 0; font-size: 1.1rem; }
+    .card p { font-size: 0.9rem; padding: 0 10px; color: #555; }
+    .card .price { font-weight: bold; margin: 10px 0; color: var(--accent); }
+    .card input[type="number"] { width: 50px; margin-bottom: 10px; }
+    .card button { background: var(--primary); color: white; border: none; padding: 8px 12px; margin: 10px; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
+    .card button:hover { background: var(--accent); }
+
+    .cta { text-align: center; margin: 50px 20px; padding: 30px; background: var(--primary); color: white; border-radius: 10px; }
+    .cta h2 { margin-bottom: 10px; }
+    .cta button { background: var(--accent); border: none; padding: 12px 20px; border-radius: 5px; font-size: 1rem; cursor: pointer; color: white; margin-top: 10px; }
+    .cta button:hover { background: #e65c00; }
+
+    footer { background: var(--dark); color: white; text-align: center; padding: 20px; margin-top: 40px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h2><a href="index.html" style="color:white; text-decoration:none;">ROOTS & CRAFTS</a></h2>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="help.html">Help</a>
+    <a href="cart.html">Cart</a>
+    <button onclick="logout()">Logout</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Empowering Communities through SHG Products</h1>
+  <p>Buy authentic handmade, organic, and eco-friendly items directly from Self Help Groups.</p>
+  <button onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button>
+</section>
+
+<h3>Explore Categories</h3>
+<div class="categories">
+  <div class="category-card">
+    <img src="../img/5.png" alt="Handicrafts">
+    <h4>Handicrafts</h4>
+  </div>
+  <div class="category-card">
+    <img src="../img/6.png" alt="Organic Food">
+    <h4>Organic Food</h4>
+  </div>
+  <div class="category-card">
+    <img src="../img/7.png" alt="Textiles">
+    <h4>Textiles</h4>
+  </div>
+</div>
+
+<h3 id="products">Featured Products</h3>
+<div id="productList" class="grid"></div>
+
+<div class="cta">
+  <h2>Support Local SHGs</h2>
+  <p>Your purchase helps empower rural women and communities.</p>
+  <button>Learn More</button>
+</div>
+
+<footer>
+  <p>Empowering Local Communities - MANAN JANGIR</p>
+</footer>
+
+<script>
+  let products = [
+    {id:0, name:"Handmade Basket", desc:"Eco-friendly bamboo basket", price:250, img:"../img/1.png"},
+    {id:1, name:"Organic Honey", desc:"Pure honey from SHG farms", price:300, img:"../img/2.png"},
+    {id:2, name:"Handloom Scarf", desc:"Beautiful cotton scarf", price:150, img:"../img/3.png"},
+    {id:3, name:"Clay Pot", desc:"Traditional clay cooking pot", price:200, img:"../img/4.png"},
+  ];
+  
+  function renderProducts() {
+    document.getElementById("productList").innerHTML = products.map((p,i)=>`
+      <div class="card">
+        <img src="${p.img}" alt="${p.name}">
+        <h4>${p.name}</h4>
+        <p>${p.desc}</p>
+        <div class="price">₹${p.price}</div>
+        <label>Quantity: <input type="number" id="qty-${i}" value="1" min="1"></label>
+        <br>
+        <button onclick="addToCart(${i})">Add to Cart</button>
+      </div>
+    `).join("");
+  }
+
+  function addToCart(i) {
+    let qtyInput = document.getElementById(`qty-${i}`);
+    let quantity = parseInt(qtyInput.value) || 1;
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let existing = cart.find(p => p.name === products[i].name);
+
+    if(existing){
+      existing.quantity += quantity;
+    } else {
+      cart.push({...products[i], quantity: quantity});
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(products[i].name + " added to cart! Quantity: " + quantity);
+  }
+
+  function logout() {
+    alert("You have been logged out.");
+    localStorage.clear();
+    window.location.href = "../index.html"; // adjust path as needed
+  }
+
+  renderProducts();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Seller Dashboard - ROOTS & CRAFTS</title>
+  <style>
+    :root {
+      --primary: #0077cc;
+      --accent: #ff6600;
+      --secondary: #f9f9f9;
+      --dark: #333;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: var(--secondary); color: var(--dark); }
+
+    /* Header */
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 15px 20px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+    }
+    header h2 a { color: white; text-decoration: none; }
+    nav a {
+      color: white; margin: 0 10px; text-decoration: none; font-weight: bold; transition: 0.3s;
+    }
+    nav a:hover { color: var(--accent); }
+    nav button {
+      margin-left: 15px; padding:6px 12px; border:none; border-radius:5px; cursor:pointer; background:#ff3300; color:white; transition:0.3s;
+    }
+    nav button:hover { background:#ff6600; }
+
+    /* Banner */
+    .banner {
+      background: url('https://img.freepik.com/free-vector/gradient-abstract-wireframe-background_23-2149009903.jpg?semt=ais_incoming&w=740&q=80') no-repeat center/cover;
+      height: 220px;
+      display: flex; align-items: center; justify-content: center;
+      color: white; text-align: center;
+    }
+    .banner h1 { font-size: 2.2rem; text-shadow: 0 2px 5px rgba(0,0,0,0.7); }
+
+    /* Main Content */
+    main {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h2 { color: var(--primary); margin-bottom: 15px; border-left:5px solid var(--accent); padding-left:10px; font-size:1.6rem; }
+
+    .form-section, .product-list { background:white; padding:20px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-bottom:40px; }
+
+    input[type="text"], input[type="number"], input[type="url"] {
+      width:100%; padding:10px; margin-bottom:15px; border-radius:6px; border:1px solid #ccc;
+    }
+    button.add-btn { background: var(--primary); color:white; border:none; padding:10px 15px; border-radius:6px; cursor:pointer; transition:0.3s; }
+    button.add-btn:hover { background: var(--accent); }
+    .product-card {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px; margin-bottom:12px; background:#f3f8ff; border-radius:8px;
+    }
+    .product-card img { width:60px; border-radius:6px; margin-right:10px; }
+    .product-card div { display:flex; align-items:center; gap:10px; }
+    .product-card button { padding:6px 10px; border:none; border-radius:5px; cursor:pointer; }
+    .edit-btn { background: #0077cc; color:white; }
+    .edit-btn:hover { background: var(--accent); }
+    .remove-btn { background: red; color:white; }
+    .remove-btn:hover { background: darkred; }
+
+    footer {
+      margin-top: 40px;
+      padding: 20px;
+      text-align: center;
+      background: var(--dark);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h2><a href="index.html">ROOTS & CRAFTS</a></h2>
+  <nav>
+    <a href="about.html">About</a>
+    <a href="help.html">Help</a>
+    <button onclick="logout()">Logout</button>
+  </nav>
+</header>
+
+<div class="banner">
+  <h1>Seller Dashboard</h1>
+</div>
+
+<main>
+  <!-- Add Product -->
+  <section class="form-section">
+    <h2>Add / Update Product</h2>
+    <input type="text" id="prodName" placeholder="Product Name">
+    <input type="text" id="prodDesc" placeholder="Description">
+    <input type="number" id="prodPrice" placeholder="Price (₹)">
+    <input type="number" id="prodQty" placeholder="Quantity" min="1">
+    <input type="url" id="prodImg" placeholder="Image URL">
+    <button class="add-btn" onclick="addOrUpdateProduct()">Add / Update Product</button>
+  </section>
+
+  <!-- Product List -->
+  <section class="product-list">
+    <h2>Current Products</h2>
+    <div id="productContainer">
+      <!-- JS renders products here -->
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>Empowering Local Communities - MANAN JANGIR</p>
+</footer>
+
+<script>
+  let products = JSON.parse(localStorage.getItem("sellerProducts")) || [];
+  let editIndex = null;
+
+  function renderProducts() {
+  const container = document.getElementById("productContainer");
+  if(products.length === 0){
+    container.innerHTML = "<p>No products added yet.</p>";
+    return;
+  }
+  container.innerHTML = products.map((p,i) => `
+    <div class="product-card">
+      <img src="${p.img}" alt="${p.name}">
+      <div>
+        <div>
+          <b>${p.name}</b> - ₹${p.price} | Qty: ${p.qty}
+        </div>
+        <div>
+          <button class="edit-btn" onclick="editProduct(${i})">Edit</button>
+          <button class="remove-btn" onclick="removeProduct(${i})">Remove</button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+  function addOrUpdateProduct() {
+      const name = document.getElementById("prodName").value.trim();
+  const desc = document.getElementById("prodDesc").value.trim();
+  const price = document.getElementById("prodPrice").value.trim();
+  const img = document.getElementById("prodImg").value.trim();
+  const qty = parseInt(document.getElementById("prodQty").value) || 1; // default 1
+
+  if(!name || !price) { alert("Name and Price are required"); return; }
+
+  const product = { name, desc, price, img, qty }; // add quantity
+  if(editIndex !== null){
+    products[editIndex] = product;
+    editIndex = null;
+  } else {
+    products.push(product);
+  }
+
+  localStorage.setItem("sellerProducts", JSON.stringify(products));
+  renderProducts();
+
+  // clear form
+  document.getElementById("prodName").value = "";
+  document.getElementById("prodDesc").value = "";
+  document.getElementById("prodPrice").value = "";
+  document.getElementById("prodImg").value = "";
+  document.getElementById("prodQty").value = "";
+}
+
+  function editProduct(i) {
+    const p = products[i];
+    document.getElementById("prodName").value = p.name;
+    document.getElementById("prodDesc").value = p.desc;
+    document.getElementById("prodPrice").value = p.price;
+    document.getElementById("prodImg").value = p.img;
+    editIndex = i;
+  }
+
+  function removeProduct(i) {
+    products.splice(i,1);
+    localStorage.setItem("sellerProducts", JSON.stringify(products));
+    renderProducts();
+  }
+
+  function logout() {
+    alert("Seller logged out");
+    localStorage.removeItem("sellerProducts"); // optional: clear seller products for demo
+    window.location.href = "../index.html"; // adjust relative path if needed
+  }
+
+  renderProducts();
+</script>
+
+</body>
+</html>

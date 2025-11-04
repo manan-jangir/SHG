@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seller Help - ROOTS & CRAFTS</title>
+<style>
+  :root {
+    --primary: #0077cc;
+    --accent: #ff6600;
+    --dark: #333;
+    --bg: #f9f9f9;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI', sans-serif; background: var(--bg); color: var(--dark); }
+
+  header {
+    background: var(--primary);
+    color:white;
+    padding:15px 20px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;
+  }
+  header h2 a { color:white; text-decoration:none; }
+  nav a { color:white; margin:0 10px; text-decoration:none; font-weight:bold; }
+  nav a:hover { color: var(--accent); }
+  nav button { margin-left:15px; padding:6px 12px; border:none; border-radius:5px; cursor:pointer; background:#ff3300; color:white; transition:0.3s; }
+  nav button:hover { background:#ff6600; }
+
+  main { max-width:900px; margin:40px auto; padding:0 20px; }
+  h1 { text-align:center; margin-bottom:30px; color: var(--primary); }
+  h2 { color: var(--primary); margin-top:20px; }
+  p { margin:10px 0; line-height:1.6; }
+  ul { margin-left:20px; margin-bottom:20px; }
+  li { margin-bottom:8px; }
+
+  footer { margin-top:50px; padding:20px; background: var(--dark); color:white; text-align:center; }
+</style>
+</head>
+<body>
+
+<header>
+  <h2><a href="index.html">ROOTS & CRAFTS - Seller</a></h2>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="help.html">Help</a>
+    <button onclick="logout()">Logout</button>
+  </nav>
+</header>
+
+<main>
+  <h1>Seller Help Center</h1>
+
+  <h2>Getting Started</h2>
+  <p>Welcome to the SHG Marketplace Seller Portal! Here’s how you can manage your products and sales:</p>
+  <ul>
+    <li><strong>Add New Products:</strong> Go to "Add Product" section, fill in name, description, price, image, and initial stock.</li>
+    <li><strong>Update Stock:</strong> Navigate to your product list and update the quantity for each product.</li>
+    <li><strong>Remove Products:</strong> Click the "Remove" button next to the product you want to delete.</li>
+    <li><strong>Track Orders:</strong> Once buyers checkout, you can view orders in your dashboard (future feature).</li>
+  </ul>
+
+  <h2>Tips for Success</h2>
+  <ul>
+    <li>Use high-quality images to showcase your products.</li>
+    <li>Provide clear and detailed descriptions.</li>
+    <li>Keep stock levels updated regularly.</li>
+    <li>Engage with buyers for better ratings and repeat sales.</li>
+  </ul>
+
+  <h2>Support</h2>
+  <p>If you face any issues, please contact our support team:</p>
+  <ul>
+    <li>Email: <a href="mailto:seller_support@roots&crafts.com">seller_support@roots&crafts.com</a></li>
+    <li>Phone: +91-9694852190</li>
+    <li>Live Chat: Available in the portal (coming soon)</li>
+  </ul>
+
+  <h2>Important Notes</h2>
+  <ul>
+    <li>Always logout after completing your session to secure your account.</li>
+    <li>Data in this demo is stored in localStorage and for learning purposes only.</li>
+  </ul>
+</main>
+
+<footer>
+  <p>Empowering Local Communities - MANAN JANGIR</p>
+</footer>
+
+<script>
+function logout() {
+  localStorage.removeItem("isLoggedIn");
+  localStorage.removeItem("userType");
+  window.location.href = "../index.html"; // adjust path
+}
+</script>
+
+</body>
+</html>
